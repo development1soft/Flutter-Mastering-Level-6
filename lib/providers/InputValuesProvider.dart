@@ -13,6 +13,10 @@ class InputValuesProvider extends ChangeNotifier{
 
     input2value = val2;
 
+    print(input1value);
+
+    print(input2value);
+
     notifyListeners();
 
   }

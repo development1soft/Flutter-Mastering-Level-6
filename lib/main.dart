@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_level_6/providers/InputValuesProvider.dart';
+import 'package:provider/provider.dart';
 import 'dashboard.dart';
 
-void main() => runApp(MyApp());
+void main() {
+
+  runApp(
+
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => InputValuesProvider(),
+          ),
+        ],
+        child: MyApp(),
+      )
+  );
+
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -13,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CounterPro(),
+      home: CounterPro()
     );
   }
 }
@@ -25,9 +41,9 @@ class CounterPro extends StatefulWidget {
 
 class _CounterProState extends State<CounterPro> {
 
-  TextEditingController input1Controller = TextEditingController();
+  TextEditingController input1Controller = TextEditingController(text: 'welcome');
 
-  TextEditingController input2Controller = TextEditingController();
+  TextEditingController input2Controller = TextEditingController(text: 'provider');
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +89,16 @@ class _CounterProState extends State<CounterPro> {
                   FlatButton(
                     child: const Text('Save'),
                     onPressed: () {
-                      print('save');
+
+                      Provider.of<InputValuesProvider>(context,listen: false).setValueToListeners(
+                        input1Controller.text,
+                        input2Controller.text
+                      );
+
+                      print(Provider.of<InputValuesProvider>(context,listen: true).input1value);
+
+                      Navigator.of(context).pop();
+
                     },
                   ),
                 ],
