@@ -41,12 +41,21 @@ class CounterPro extends StatefulWidget {
 
 class _CounterProState extends State<CounterPro> {
 
+  var n = 0;
+
+  var val1;
+
+  var val2;
+
   TextEditingController input1Controller = TextEditingController(text: 'welcome');
 
   TextEditingController input2Controller = TextEditingController(text: 'provider');
 
   @override
   Widget build(BuildContext context) {
+
+    print("n = ${n++}");
+
     return Scaffold(
       appBar: AppBar(title: Text('Demo')),
       body: Center(
@@ -90,12 +99,20 @@ class _CounterProState extends State<CounterPro> {
                     child: const Text('Save'),
                     onPressed: () {
 
-                      Provider.of<InputValuesProvider>(context,listen: false).setValueToListeners(
-                        input1Controller.text,
-                        input2Controller.text
-                      );
+                      // setState(() {
+                      //
+                      //   val1 = input1Controller.text;
+                      //
+                      //   val2 = input2Controller.text;
+                      //
+                      // });
 
-                      print(Provider.of<InputValuesProvider>(context,listen: true).input1value);
+                      // Provider.of<InputValuesProvider>(context,listen: false).setValueToListeners(
+                      //   input1Controller.text,
+                      //   input2Controller.text
+                      // );
+
+                      // print(Provider.of<InputValuesProvider>(context,listen: true).input1value);
 
                       Navigator.of(context).pop();
 

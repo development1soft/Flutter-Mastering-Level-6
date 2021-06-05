@@ -11,7 +11,7 @@ class Input2Value extends StatelessWidget {
         width: 150,
         height: 150,
         child: Center(
-          child: Text((Provider.of<InputValuesProvider>(context,listen: true).input2value) == null ? 'Input 2 Value' : Provider.of<InputValuesProvider>(context,listen: true).input1value, style: TextStyle(fontSize: 40)),
+          child: Text((Provider.of<InputValuesProvider>(context,listen: true).input2value) == null ? 'Input 2 Value' : Provider.of<InputValuesProvider>(context,listen: true).input2value, style: TextStyle(fontSize: 40)),
         ),
       ),
     );
