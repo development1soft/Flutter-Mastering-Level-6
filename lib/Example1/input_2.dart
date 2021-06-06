@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_level_6/providers/InputValuesProvider.dart';
+import 'package:flutter_level_6/Example1/providers/InputValuesProvider.dart';
 import 'package:provider/provider.dart';
 
 class Input2Value extends StatelessWidget {

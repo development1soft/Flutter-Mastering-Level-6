@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_level_6/providers/InputValuesProvider.dart';
+import 'package:flutter_level_6/providers/ShoppingCartProvider.dart';
 import 'package:provider/provider.dart';
-import 'dashboard.dart';
+
+import 'cart.dart';
 
 void main() {
 
   runApp(
-
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => InputValuesProvider(),
-          ),
-        ],
-        child: MyApp(),
-      )
+    ChangeNotifierProvider(
+      create: (_) => ShoppingCartProvider(),
+      child: MyApp(),
+    )
   );
 
 }
@@ -29,100 +25,95 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CounterPro()
+      home: ProductsScreen(),
     );
   }
 }
 
-class CounterPro extends StatefulWidget {
+class ProductsScreen extends StatefulWidget {
   @override
-  _CounterProState createState() => _CounterProState();
+  _ProductsScreenState createState() => _ProductsScreenState();
 }
 
-class _CounterProState extends State<CounterPro> {
+class _ProductsScreenState extends State<ProductsScreen> {
 
-  var n = 0;
-
-  var val1;
-
-  var val2;
-
-  TextEditingController input1Controller = TextEditingController(text: 'welcome');
-
-  TextEditingController input2Controller = TextEditingController(text: 'provider');
+  List products = [
+    {
+      'id' : 1,
+      'title' : 'product 1',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '20₺',
+    },
+    {
+      'id' : 2,
+      'title' : 'product 2',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '30₺',
+    },
+    {
+      'id' : 3,
+      'title' : 'product 3',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '78₺',
+    },
+    {
+      'id' : 4,
+      'title' : 'product 4',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '35₺',
+    },
+    {
+      'id' : 5,
+      'title' : 'product 5',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '26₺',
+    },
+    {
+      'id' : 6,
+      'title' : 'product 6',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '75₺',
+    },
+    {
+      'id' : 7,
+      'title' : 'product 7',
+      'description' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      'price' : '25₺',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-
-    print("n = ${n++}");
-
     return Scaffold(
-      appBar: AppBar(title: Text('Demo')),
-      body: Center(
-        child: Dashboard(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.open_in_browser),
-        onPressed: () {
-          return showDialog<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Enter Your Values'),
-                content: SingleChildScrollView(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 150,
-                    child: ListView(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: input1Controller,
-                          decoration: InputDecoration(
-                            hintText: 'Input 1 Value',
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          controller: input2Controller,
-                          decoration: InputDecoration(
-                            hintText: 'Input 2 Value',
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: const Text('Save'),
-                    onPressed: () {
-
-                      // setState(() {
-                      //
-                      //   val1 = input1Controller.text;
-                      //
-                      //   val2 = input2Controller.text;
-                      //
-                      // });
-
-                      // Provider.of<InputValuesProvider>(context,listen: false).setValueToListeners(
-                      //   input1Controller.text,
-                      //   input2Controller.text
-                      // );
-
-                      // print(Provider.of<InputValuesProvider>(context,listen: true).input1value);
-
-                      Navigator.of(context).pop();
-
-                    },
-                  ),
-                ],
-              );
+      appBar: AppBar(
+        title: Text('Products Page'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartScreen()));
             },
+          )
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.only(top: (index == 0) ? 10 : 25),
+            child: ListTile(
+              leading: Text('${products[index]['price']}'),
+              title: Text(products[index]['title']),
+              subtitle: Text(products[index]['description']),
+              trailing: GestureDetector(
+                child: Icon(Icons.shopping_cart),
+                onTap: (){
+                  Provider.of<ShoppingCartProvider>(context,listen: false).addToCart(products[index]);
+                },
+              ),
+            ),
           );
-        },
+        }
       ),
     );
   }
