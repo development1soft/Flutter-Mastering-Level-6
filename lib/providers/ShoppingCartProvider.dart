@@ -13,4 +13,39 @@ class ShoppingCartProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  checkIfProductExistsInCart(productID)
+  {
+    if(cart.length > 0)
+    {
+
+      var result = cart.where((product) => product['id'] == productID);
+
+      if(result.isEmpty)
+      {
+
+        return false;
+
+      }else{
+
+        return true;
+
+      }
+
+    }else{
+
+      return false;
+
+    }
+  }
+
+  deleteProductFromCart(productID)
+  {
+
+    cart.removeWhere((product) => product['id'] == productID);
+
+    print(cart.toString());
+
+    notifyListeners();
+
+  }
 }

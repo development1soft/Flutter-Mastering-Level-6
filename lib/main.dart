@@ -105,7 +105,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
               leading: Text('${products[index]['price']}'),
               title: Text(products[index]['title']),
               subtitle: Text(products[index]['description']),
-              trailing: GestureDetector(
+              trailing: (Provider.of<ShoppingCartProvider>(context).checkIfProductExistsInCart(products[index]['id'])) ?  GestureDetector(
+                child: Icon(Icons.delete),
+                onTap: (){
+                  Provider.of<ShoppingCartProvider>(context,listen: false).deleteProductFromCart(products[index]['id']);
+                },
+              ) : GestureDetector(
                 child: Icon(Icons.shopping_cart),
                 onTap: (){
                   Provider.of<ShoppingCartProvider>(context,listen: false).addToCart(products[index]);
