@@ -88,11 +88,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
       appBar: AppBar(
         title: Text('Products Page'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartScreen()));
-            },
+          Row(
+            children: <Widget>[
+              Text('${Provider.of<ShoppingCartProvider>(context).cart.length}',style: TextStyle(fontSize: 18)),
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartScreen()));
+                },
+              ),
+            ],
           )
         ],
       ),
